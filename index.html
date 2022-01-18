@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>firefox media controls bug</title>
+    <script>
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('button.remove').forEach(btn => btn.addEventListener('click', () => {
+    btn.parentElement.querySelector('iframe')?.remove();
+  }));
+});
+
+    </script>
+  </head>
+  <body>
+    <p>Firefox bug from circa version 95: external media controls (MPRIS controls, windows media control overlay) are sometimes not removed when the media is removed from the DOM.</p>
+    <p>While simple test cases seem to work fine, youtube embeds will trigger the bug. Even reloading the offending tab is not enough to remove the stuck controls: only closing the tab or unloading it with an extension seems to fix it.</p>
+    <div>
+      <h3>buggy controls:</h3>
+      <div>
+        <iframe width="280" height="162" src="https://www.youtube.com/embed/MtN1YnoL46Q" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <button class="remove">remove</button>
+    </div>
+    <div>
+      <h3>non-buggy controls:</h3>
+      <div>
+        <iframe src="player.html"></iframe>
+      </div>
+      <button class="remove">remove</button>
+    </div>
+  </body>
+</html>
